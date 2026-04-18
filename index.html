@@ -38,7 +38,7 @@
 <button id="pickBtn">Lo que siento por ti es algo "inefable"❤️ </button>
 <input type="file" id="pickFile" accept="audio/*">
   <audio id="audio" preload="auto">
-  <source src="https://github.com/angelmanuelvasquezcastillo-cloud/Para-Carito/raw/refs/heads/main/WhatsApp-Video-2026-04-16-at-9.47.00-PM.mp3" type="audio/mpeg">
+  <source src="https://github.com/angelmanuelvasquezcastillo-cloud/Para-ti-Carito-/raw/refs/heads/main/WhatsApp-Video-2026-04-16-at-9.47.00-PM.mp3" type="audio/mpeg">
 </audio>
 </div>
 
@@ -53,8 +53,8 @@ function showError(msg){ err.textContent = msg; err.style.display='block'; }
 const audio = document.getElementById('audio');
 // 🎵 Lista de canciones
 const canciones = [
-  "https://github.com/angelmanuelvasquezcastillo-cloud/Para-Carito/raw/refs/heads/main/WhatsApp-Video-2026-04-16-at-9.47.00-PM.mp3",
-  "https://raw.githubusercontent.com/angelmanuelvasquezcastillo-cloud/Para-Carito/main/WhatsApp-Video-2026-04-15-at-9.59.07-PM.mp3"
+  "https://github.com/angelmanuelvasquezcastillo-cloud/Para-ti-Carito-/raw/refs/heads/main/WhatsApp-Video-2026-04-16-at-9.47.00-PM.mp3",
+  "https://github.com/angelmanuelvasquezcastillo-cloud/Para-ti-Carito-/raw/refs/heads/main/WhatsApp-Video-2026-04-15-at-9.59.07-PM.mp3"
 ];
 
 let index = 0;
@@ -171,23 +171,41 @@ scene.add(bg);
 
 // Galaxy
 const galaxy = new THREE.Group(); scene.add(galaxy);
-const phrases = ["Pinchecha ✨", " Hermosa 💛", "Mi Bebe", "Mi Cielito 🌌", "Hermosota ✨", "Mi Infinita ♾️", "Mi Todo", "Me Encantas 🥰", "Te amo Carito❤️  ", "Te Amo💛", "Mi Canción Favorita 🎶", "Unica 😊", "Mi Reina 👑", "Mi Amor", "Mi Mundo", "Mi Luz 🌠", "Mi Niña", "Mi Tesoro💛", "Mi Paz", "Mi Eterna", "Mi Sueño", "Mi Pensamiento Favorito", "Mi Bombom", "Mi Diosa", "Te Amo Infinitamente ♾️", "Mi casualidad favorita", "Mi persona favorita"];
+const phrases = ["Pinchecha ✨", " Hermosa 💛", "Mi Bebe", "Mi Cielito 🌌", "Hermosota ✨", "Mi Infinita ♾️", "Mi Todo", "Me Encantas 🥰", "Te Amo Carito❤️  ", "Te Amo❤️", "Mi Canción Favorita 🎶", "Única 😊", "Mi Reina 👑", "Mi Amor", "Mi Mundo", "Mi Luz 🌠", "Mi Niña", "Mi Tesoro💛", "Mi Paz", "Mi Eterna", "Mi Sueño", "Carito💫", "Mi Pensamiento Constante", "Mi Bombom", "Mi Diosa", "Te Amo Infinitamente ♾️", "Mi casualidad favorita", "Mi persona favorita", "  Mi siempre, aunque todavía no seamos nada  ", "Mi debilidad que no quiero superar", "Mi ilusión mas real", "Mi voz favorita", "Desde que dijiste mi nombre por primera vez", "Desde lo simple que se volvió especial", "Desde aquel cargador prestado", "Tu forma de llamarme con emoción", "Mi Bella Doncella", "Mi Linda Princesa", "Te elegiría sin pensarlo", "Con ese detallito de Pikachu⚡", "Con algo de Stitch💙", "Gracias por hablarme primero✨", "Mi BlancaNieves👑", "Te Quiero Carito❤️", "Me Gustas Carito❤️"];
 const phraseCount = Math.max(phrases.length * 6, 180);
-const arms = 5, radius = 82, maxH = 22;
+const arms = 5, radius = 130, maxH = 22;
 
 function makeTextTexture(text, size=48){
-  const c=document.createElement('canvas'); c.width=1024; c.height=128;
-  const g=c.getContext('2d'); g.clearRect(0,0,c.width,c.height);
-  g.font='800 '+size+'px -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial';
-  g.textAlign='center'; g.textBaseline='middle';
-  g.shadowColor='rgba(210,140,255,0.95)'; g.shadowBlur=24;
-  g.fillStyle='rgba(255,240,255,0.98)'; g.fillText(text,c.width/2,c.height/2);
+  const c = document.createElement('canvas');
+  const g = c.getContext('2d');
+
+  g.font = '800 ' + size + 'px -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial';
+
+  // 🔥 medir el ancho real del texto
+  const textWidth = g.measureText(text).width;
+
+  // 👉 ajustar canvas automáticamente
+  c.width = textWidth + 100;  // espacio extra
+  c.height = size * 2;
+
+  // volver a aplicar estilo (porque resetea)
+  g.font = '800 ' + size + 'px -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial';
+  g.textAlign = 'center';
+  g.textBaseline = 'middle';
+
+  // brillo
+  g.shadowColor = 'rgba(255,255,255,1)';
+  g.shadowBlur = 20;
+
+  g.fillStyle = 'rgba(255,255,255,1)';
+  g.fillText(text, c.width/2, c.height/2);
+
   return new THREE.CanvasTexture(c);
 }
 
 for(let i=0;i<phraseCount;i++){ 
   const text = phrases[i % phrases.length];
-  const tex = makeTextTexture(text,48);
+  const tex = makeTextTexture(text,64);
 
   const spr = new THREE.Sprite(
     new THREE.SpriteMaterial({ map:tex, transparent:true, depthWrite:false })
@@ -207,17 +225,17 @@ for(let i=0;i<phraseCount;i++){
   const dist = Math.pow(t, 0.8) * radius;
 
   // 🔥 ESPIRAL REAL (clave)
-  const spin = 6;
-  const angle = armAngle + dist * 0.15 + t * spin;
+  const spin = 8;
+  const angle = armAngle + dist * 0.08 + t * spin;
 
   // 🔥 ligera variación para que no sea líneas rectas
-  const randomOffset = (Math.random() - 0.5) * 2;
+  const randomOffset = (Math.random() - 0.5) * (dist * 0.1);
 
   const x = Math.cos(angle) * (dist + randomOffset);
   const z = Math.sin(angle) * (dist + randomOffset);
 
   // altura leve
-  const y = (Math.random() - 0.5) * maxH * 0.4;
+  const y = (Math.random() - 0.5) * maxH * 0.3;
 
   spr.position.set(x,y,z);
   spr.scale.set(20,2.6,1);
