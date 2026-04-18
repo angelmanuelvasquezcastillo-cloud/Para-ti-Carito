@@ -91,8 +91,9 @@ function iniciarAudioRomantico() {
   }
 }
 
-document.body.addEventListener('click', iniciarAudioRomantico, { once: true });
-document.body.addEventListener('touchstart', iniciarAudioRomantico, { once: true });
+['click','touchstart','touchend'].forEach(evt => {
+  document.body.addEventListener(evt, iniciarAudioRomantico, { once: true });
+});
 playBtn.onclick = async () => {
   try { if (audio.paused) { await audio.play(); playBtn.textContent='⏸︎'; } else { audio.pause(); playBtn.textContent='▶︎'; } }
   catch(e){ showError('Si no suena, toca “Elegir canción” y selecciona tu MP3.'); }
